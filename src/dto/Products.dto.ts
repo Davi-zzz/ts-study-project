@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString, IsUUID, UUIDVersion } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString, IsUUID, IsOptional } from "class-validator";
 
 export class ProductInputDTO  {
 
@@ -7,6 +7,7 @@ export class ProductInputDTO  {
 
     @IsNotEmpty()
     @IsNumber()
+
     price: Number;
 
     @IsNotEmpty()
@@ -28,17 +29,21 @@ export class ProductGetDTO {
 export class ProductUpdateDTO {
 
     @IsString()
+    @IsOptional()
     description?: string;
 
     @IsNotEmpty()
     @IsNumber()
+    @IsOptional()
     price?: Number;
 
     @IsNotEmpty()
+    @IsOptional()
     @IsUUID()
     bar_code?: string;
 
     @IsNotEmpty()
     @IsNumber()
+    @IsOptional()
     group?: Number;
 }

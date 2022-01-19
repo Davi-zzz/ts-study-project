@@ -1,10 +1,12 @@
-'use strict'
+import app from '../js-study/app';
+import * as http  from 'http';
 
-const http = require('http');
-const debug = require('debug')('nodestr:server');
-const app = require('../js-study/app');
+import debug from 'debug';
+
+debug('nodestr:server');
 
 const server = http.createServer(app);
 let port = app.get('port');
+
 server.listen(port, () => {console.log('server is working on http://localhost:' + port)});
 

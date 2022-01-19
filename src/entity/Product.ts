@@ -1,4 +1,4 @@
-import {Column, Double, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
 export class Product {
@@ -10,7 +10,7 @@ export class Product {
     description:string;
 
     @Column()
-    price: Double;
+    price: Number;
 
     @Column()
     bar_code: string;

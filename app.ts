@@ -7,5 +7,5 @@ const port = 3080;
 app.set('port', port);
 app.use('/', route);
 
-module.exports = app;
+export default app;
 

@@ -8,8 +8,12 @@ export var root = {
         let listUser = us.getAllUsers();
         return listUser;
     },
-    createNewUser: () => {
-        us
+    createNewUser: ({input}) => { 
+        
+        let createdUser = us.createUser(input);
+
+        // console.log(createdUser);
+        return createdUser;
     }
     
   };

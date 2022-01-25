@@ -16,11 +16,11 @@ export var schema = buildSchema(`
     type Mutation {
         createNewUser(input: createNewUserInput!): User!
     }
-    type createNewUserInput {
+    input createNewUserInput {
         firstName: String!
         lastName: String!
-        age: Int!
         email: String!
+        age: Int!
         password: String!
     }
 `);

@@ -2,12 +2,13 @@ import { Isucess } from './../interfaces/sucess';
 import { Ierror } from './../interfaces/error';
 import { Service } from "typedi";
 import User from "../entity/User";
+import { create } from 'domain';
 
 
 
 @Service()
 export default class UsersService {
-    createUser = async (data: Partial<User>): Promise<User | Ierror> => {
+    createUser = async (data): Promise<User | Ierror> => {
         const user = await User.findOne({email: data.email});
 
         if ( user ) {
@@ -17,11 +18,25 @@ export default class UsersService {
                 message: 'User Already exists'
             }
         }
-        const createdUser = await User.create({...data}).save().then(() => {
+        let createdUser = new User();
+        createdUser.age = data.age;
+        createdUser.email = data.email;
+        createdUser.firstName = data.firstName;
+        createdUser.lastName = data.lastName;
+        createdUser.password = data.password;
+        
+        createdUser = await User.create(createdUser);
+        console.log(createdUser);
+        
+        await User.save(createdUser).then(() => {  createdUser.password = 'secret';
+        return createdUser; });
+        
+        createdUser.password = 'secret';
+        return createdUser;
+        
+        
+              
 
-            createdUser.password = 'secret';
-            return createdUser;
-        });
 
         
     };

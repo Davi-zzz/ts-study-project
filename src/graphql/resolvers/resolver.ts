@@ -1,19 +1,32 @@
-import User from '../../entity/User';
 import UsersService from '../../services/users.service';
 
 let us = new UsersService;
 
-export var root = {
+export var resolvers = {
+    
     getAllUsers: () => {
         let listUser = us.getAllUsers();
         return listUser;
     },
-    createNewUser: ({input}) => { 
+    createNewUser: async ({input}) => { 
         
-        let createdUser = us.createUser(input);
-
-        // console.log(createdUser);
-        return createdUser;
+        let data = await us.createUser(input);
+        console.log(data);
+        return data;
+    },
+    TesteOlavo: {
+        __resolveType(obj) {
+            console.log('here');
+            if (obj['id']) {
+                return "User"
+            }
+            if (obj['error']) {
+                console.log('here');
+                
+                return "Error"
+            }
+            console.log('here');
+            return null
+        }
     }
-    
   };

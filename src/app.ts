@@ -2,8 +2,7 @@ import "reflect-metadata";
 import * as express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import {schema} from "./graphql/schema/user.schema";
-import {root} from "../src/graphql/resolvers/resolver";
-// import { Mutation } from "../src/graphql/resolvers/mutation";
+import {resolvers} from "../src/graphql/resolvers/resolver";
 import {createConnection} from "typeorm";
 
 createConnection().then(async connection => {
@@ -20,7 +19,7 @@ const port = 3080;
 
 app.set('port', port);
 
-app.use("/graphql", graphqlHTTP({ schema: schema, rootValue: root , graphiql: true}));
+app.use("/graphql", graphqlHTTP({ schema: schema, rootValue: resolvers , graphiql: true}));
 
 export default app;
 

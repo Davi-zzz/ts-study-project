@@ -1,22 +1,20 @@
-import { Isucess } from './../interfaces/sucess';
-import { Ierror } from './../interfaces/error';
+import {Ierror} from "../interfaces/error";
 import { Service } from "typedi";
 import User from "../entity/User";
-import { create } from 'domain';
-
 
 
 @Service()
 export default class UsersService {
+    
     createUser = async (data): Promise<User | Ierror> => {
         const user = await User.findOne({email: data.email});
-
         if ( user ) {
-            return { 
-                error: true, 
-                name: 'API Users Error',
-                message: 'User Already exists'
+            return {
+                error: true,
+                name: 'User API Error', 
+                message: 'This email is Already in use!'
             }
+            
         }
         let createdUser = new User();
         createdUser.age = data.age;
@@ -26,18 +24,10 @@ export default class UsersService {
         createdUser.password = data.password;
         
         createdUser = await User.create(createdUser);
-        console.log(createdUser);
         
-        await User.save(createdUser).then(() => {  createdUser.password = 'secret';
-        return createdUser; });
+        await User.save(createdUser).then( () => {createdUser.password = 'secret';});
         
-        createdUser.password = 'secret';
-        return createdUser;
-        
-        
-              
-
-
+        return createdUser; 
         
     };
     userUpdate = async (data: Partial<User>): Promise<User | Ierror> => {
@@ -51,23 +41,22 @@ export default class UsersService {
                 return user;
             }
             catch {
-                
-                return { 
-                    error: true, 
-                    name: 'API Users Error',
-                    message: 'Error to update this user'
+                return {
+                    error: true,
+                    name: 'User API Error', 
+                    message: 'User cant be updated!'
                 }
             }
         }
         return {
             error: true,
-            name: 'API Users Error',
-            message: 'User doesnt exists'
+            name: 'User API Error', 
+            message: 'User dont Find!'
         }
     }
     
     getUser = async (data): Promise<User | Ierror> => {
-
+        //todo
         const user = await User.findOneOrFail({id: data.id});
 
         if ( user ) {
@@ -75,28 +64,29 @@ export default class UsersService {
         }
         return {
             error: true,
-            name: "API User Error",
-            message: "User not find"
+            name: 'User API Error', 
+            message: 'User dont Find!'
         }
     }
 
     getAllUsers = async (): Promise<User[] | Ierror> => {
         //todo
+        console.log('entrou');
         const users = await User.find();
 
-        console.log('entrou');
         if (users) {
             
             return users;
         }
+
         return {
-            error: false,
-            name: "API User Error",
-            message: "There are no Users"
+            error: true,
+            name: 'User API Error', 
+            message: 'There are no Users!'
         }
     }
 
-    deleteUser = async (data): Promise< Isucess | Ierror> => {
+    deleteUser = async (data): Promise< string | Ierror> => {
         
         const user = await User.findOne({id: data.id});
 
@@ -104,17 +94,14 @@ export default class UsersService {
             
             await User.delete(User, data.id);
 
-            return {
-                sucess: true,
-                message: 'User deleted',
-                name: 'API User Operation Sucess'
-            } 
+            return 'sucess to Delete User'
+            
         }
 
         return {
             error: true,
-            message: 'User deleted',
-            name: 'API User Error'
+            name: 'User API Error', 
+            message: 'User cant be deleted!'
         }
     }
 

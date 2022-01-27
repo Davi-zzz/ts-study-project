@@ -10,12 +10,23 @@ export var schema = buildSchema(`
         email: String!
         password: String!
     }
+    type Error {
+        error: Boolean
+        name: String
+        message: String
+    }
+    type queryResult {
+        data: TesteOlavo
+    }
+    union TesteOlavo = User | Error
+
     type Query {
         getAllUsers: [User!]!
     }
     type Mutation {
-        createNewUser(input: createNewUserInput!): User!
+        createNewUser(input: createNewUserInput!): queryResult
     }
+
     input createNewUserInput {
         firstName: String!
         lastName: String!

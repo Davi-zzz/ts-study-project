@@ -1,4 +1,4 @@
-export interface Ierror {
+export type CustomError = {
 
      error: boolean
      name: string

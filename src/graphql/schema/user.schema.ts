@@ -1,6 +1,8 @@
-import { buildSchema } from "graphql";
 
-export var schema = buildSchema(`
+import { gql } from "@apollo/server";
+
+export const typeDefs = gql`
+    
   
     type User {
         id: ID!
@@ -15,16 +17,21 @@ export var schema = buildSchema(`
         name: String
         message: String
     }
-    type queryResult {
-        data: TesteOlavo
+    type UserSucessfullyCreated {
+        user: User
     }
-    union TesteOlavo = User | Error
+    type UserErrorToBeCreated {
+        user: User
+        message: Error
+    }
+    union QueryResult = User | Error
 
     type Query {
-        getAllUsers: [User!]!
+        getAllUsers: [User!]
     }
+    
     type Mutation {
-        createNewUser(input: createNewUserInput!): queryResult
+        createNewUser(input: createNewUserInput!): QueryResult
     }
 
     input createNewUserInput {
@@ -34,5 +41,5 @@ export var schema = buildSchema(`
         age: Int!
         password: String!
     }
-`);
+`;
 

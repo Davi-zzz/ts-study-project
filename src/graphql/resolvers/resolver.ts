@@ -1,7 +1,8 @@
+import LoginService from '../../services/login.service';
 import UsersService from '../../services/users.service';
 
 let us = new UsersService;
-
+let ls = new LoginService;
 export const handler = {
     
     getAllUsers: () => {
@@ -12,13 +13,20 @@ export const handler = {
         
         let data = await us.createUser(input);
 
-        if (data['error']) {
-            console.log('entrou no if');
-            return data
-        }
-        console.log(data);
-
         return data;
+    },
+    updateUser: async ({input}) => {
+        let resultUser = await us.userUpdate(input);
+
+        return resultUser;
+    },
+    logon: async ({input}) => {
+        let result = await ls.findByLogin(input);
+        return result;
+    },
+    deleteUser: async ({input}) => {
+        let result = await us.deleteUser(input);
+        return result;
     }
    
   };

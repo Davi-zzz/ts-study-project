@@ -17,9 +17,7 @@ createConnection().then(async connection => {
 
 const app = express();
 
-const port = 3080;
-
-app.set('port', port);
+app.set('port', 3080);
 
 const schema = makeExecutableSchema({typeDefs, resolvers: mutationResolver })
 

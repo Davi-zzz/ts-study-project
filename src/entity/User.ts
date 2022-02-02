@@ -1,6 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Unique} from "typeorm";
 
 @Entity()
+@Unique(["email"])
 export default class User extends BaseEntity {
 
     @PrimaryGeneratedColumn()
@@ -15,6 +16,7 @@ export default class User extends BaseEntity {
     @Column()
     age: number;
 
+   
     @Column()
     email: string;
 

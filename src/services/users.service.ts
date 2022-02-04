@@ -33,7 +33,6 @@ export default class UsersService {
             //and treat the sensitive kind information
             const treatedUser = JSON.parse((JSON.stringify(createdUser)));
             treatedUser.password = 'secret'
-            console.log(treatedUser);
             createdUser = treatedUser;
 
         });
@@ -89,8 +88,7 @@ export default class UsersService {
         }
     }
 
-    getAllUsers = async (): Promise<User[] | CustomError> => {
-
+    getAllUsers = async (): Promise<User[] | CustomError> => {        
         const users = await User.find();
 
         if (users) {

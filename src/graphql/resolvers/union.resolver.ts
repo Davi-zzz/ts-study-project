@@ -1,18 +1,20 @@
 
 
 export const mutationResolver = {
-    QueryResult: {
+    QueryResultGeneric: {
         __resolveType: (obj:any) => {
-            if (obj['id']) {
+            if (obj['id']) {                
                 return "User"
-            }
-            if (obj['error']) {
-                
-                return "Error"
             }
             if (obj['sucess']) {
                 return "Sucess"
             }
+            if (obj['user']){
+                return "AuthenticatedUser"
+            }
+            if (obj['error']) {
+                return "Error"
+            }            
             return null
         }
     }

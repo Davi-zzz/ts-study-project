@@ -1,8 +1,6 @@
 import { gql } from "@apollo/server";
 
 export const typeDefs = gql`
-    
-  
     type User {
         id: ID!
         firstName: String!
@@ -21,17 +19,24 @@ export const typeDefs = gql`
         name: String
         message: String
     }
-    union QueryResult = User | Error | Sucess
-
-    type Query {
-        getAllUsers: [User!]
-        logon(input: Login): QueryResult
+    input ValidateRequest {
+        token: String!
     }
+    type AuthenticatedUser {
+        token: String!
+        user: User!
+    }
+    union QueryResultGeneric = User | Error | Sucess | AuthenticatedUser
     
+    type Query {
+        logon(input: Login): QueryResultGeneric
+        getAllUsers(input: ValidateRequest): [User!]
+    }
+        
     type Mutation {
-        createNewUser(input: CreateUserInput!): QueryResult
-        updateUser(input: UpdateUserInput!): QueryResult
-        deleteUser(input: ID!): QueryResult
+        createNewUser(input: CreateUserInput!): QueryResultGeneric
+        updateUser(input: UpdateUserInput!): QueryResultGeneric
+        deleteUser(input: ID!): QueryResultGeneric
 
     }
     input Login {

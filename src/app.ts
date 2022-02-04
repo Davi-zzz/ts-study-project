@@ -1,7 +1,7 @@
-import { mutationResolver } from './graphql/resolvers/union.resolver';
-import { handler } from './graphql/resolvers/resolver';
 import "reflect-metadata";
 import * as express from 'express';
+import { mutationResolver } from './graphql/resolvers/union.resolver';
+import { handler} from './graphql/resolvers/resolver';
 import { graphqlHTTP } from 'express-graphql';
 import {typeDefs} from "./graphql/schema/user.schema";
 import {createConnection} from "typeorm";
@@ -19,9 +19,9 @@ const app = express();
 
 app.set('port', 3080);
 
-const schema = makeExecutableSchema({typeDefs, resolvers: mutationResolver })
+const schema = makeExecutableSchema({typeDefs, resolvers: mutationResolver });
 
-app.use("/graphql", graphqlHTTP({ schema, rootValue: handler , graphiql: true}));
+app.use("/graphql", graphqlHTTP({ schema, rootValue: handler, graphiql: true, }));
 
 export default app;
 
